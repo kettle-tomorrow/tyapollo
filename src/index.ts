@@ -1,5 +1,8 @@
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 const typeDefs = gql`
   type Project {
@@ -12,32 +15,21 @@ const typeDefs = gql`
 	}
 `;
 
-const projects = [
-  {
-    id: 1,
-    title: 'title1'
-  },
-  {
-    id: 2,
-    title: 'title2'
-  },
-  {
-    id: 3,
-    title: 'title3'
-  },
-  {
-    id: 4,
-    title: 'title4'
-  },
-]
-
 const resolvers = {
 	Query: {
     project: (_: any, { id }: { id: number }) => {
-      return projects.find(project => project.id == id)
+      return prisma.project.findUnique({
+        where: {
+          id: id
+        }
+      });
     },
     projects: (_: any, { title }: { title: string }) => {
-      return projects.filter(project => project.title.includes(title))
+      return prisma.project.findMany({
+        where: {
+          title: title
+        }
+      });
     }
 	},
 };
