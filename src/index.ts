@@ -1,19 +1,16 @@
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
-import { PrismaClient } from '@prisma/client'
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { loadSchemaSync } from '@graphql-tools/load';
+import { addResolversToSchema } from '@graphql-tools/schema';
+import { PrismaClient } from '@prisma/client';
+import { join } from 'path';
+
+const schema = loadSchemaSync(join(__dirname, 'schema.graphql'), {
+  loaders: [new GraphQLFileLoader()],
+});
 
 const prisma = new PrismaClient()
-
-const typeDefs = gql`
-  type Project {
-    id: Int!
-    title: String
-  }
-  type Query {
-		project(id: Int): Project
-    projects(title: String): [Project]
-	}
-`;
 
 const resolvers = {
 	Query: {
@@ -34,7 +31,8 @@ const resolvers = {
 	},
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const schemaWithResolvers = addResolversToSchema({ schema, resolvers });
+const server = new ApolloServer({ schema: schemaWithResolvers });
 
 const app = express();
 server.applyMiddleware({ app });
