@@ -5,34 +5,24 @@ import { loadSchemaSync } from '@graphql-tools/load';
 import { addResolversToSchema } from '@graphql-tools/schema';
 import { PrismaClient } from '@prisma/client';
 import { join } from 'path';
+import { Context } from './types/context';
+import resolvers from './resolvers';
 
-const schema = loadSchemaSync(join(__dirname, 'schema.graphql'), {
+const schema = loadSchemaSync(join(__dirname, '../schema.graphql'), {
   loaders: [new GraphQLFileLoader()],
 });
 
 const prisma = new PrismaClient()
 
-const resolvers = {
-	Query: {
-    project: (_: any, { id }: { id: number }) => {
-      return prisma.project.findUnique({
-        where: {
-          id: id
-        }
-      });
+const schemaWithResolvers = addResolversToSchema({schema, resolvers });
+const server = new ApolloServer({
+  schema: schemaWithResolvers,
+  context: {
+    user: {
+      id: 'hoge',
     },
-    projects: (_: any, { title }: { title: string }) => {
-      return prisma.project.findMany({
-        where: {
-          title: title
-        }
-      });
-    }
-	},
-};
-
-const schemaWithResolvers = addResolversToSchema({ schema, resolvers });
-const server = new ApolloServer({ schema: schemaWithResolvers });
+  } as Context
+});
 
 const app = express();
 server.applyMiddleware({ app });

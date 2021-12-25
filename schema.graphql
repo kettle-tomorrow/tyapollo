@@ -8,7 +8,7 @@ type Mutation {
   createProject(input: CreateProjectInput): Project
   updateProject(id: Int, input: UpdateProjectInput): Project
   deleteProject(id: Int): Project
-  createUser(id: Int, input: UserInput): User
+  createUser(id: Int, input: UserInput!): User
   updateUser(id: Int, input: UserInput): User
 }
 
