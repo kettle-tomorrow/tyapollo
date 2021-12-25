@@ -1,9 +1,43 @@
+type Query {
+  getUser: User
+	getProjects: [Project]!
+  getProjectById(id: Int!): Project
+}
+
+type Mutation {
+  createProject(input: CreateProjectInput): Project
+  updateProject(id: Int, input: UpdateProjectInput): Project
+  deleteProject(id: Int): Project
+  createUser(id: Int, input: UserInput): User
+  updateUser(id: Int, input: UserInput): User
+}
+
+input CreateProjectInput {
+  title: String!
+}
+
+input UpdateProjectInput {
+ title: String
+ status: ProjectStatus
+}
+
+input UserInput {
+  name: String!
+}
+
+enum ProjectStatus {
+  pending
+  doing
+  done
+}
+
 type Project {
-  id: Int!
+  id: Int
   title: String
 }
 
-type Query {
-	project(id: Int): Project
-  projects(title: String): [Project]
+type User {
+  id: String
+  name: String
+  projects: [Project]
 }
