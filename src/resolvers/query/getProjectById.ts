@@ -16,7 +16,7 @@ export const getProjectById: QueryResolvers['getProjectById'] = async(
     }
   })
   if (!project) {
-    throw new Error('Not Found Todo.');
+    throw new Error('Not Found Project.');
   }
   return { ...project };
 }

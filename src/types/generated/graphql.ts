@@ -35,7 +35,7 @@ export type MutationCreateProjectArgs = {
 
 
 export type MutationCreateUserArgs = {
-  id: Scalars['Int'];
+  id: Scalars['String'];
   input: UserInput;
 };
 
@@ -52,7 +52,7 @@ export type MutationUpdateProjectArgs = {
 
 
 export type MutationUpdateUserArgs = {
-  id: Scalars['Int'];
+  id: Scalars['String'];
   input: UserInput;
 };
 
