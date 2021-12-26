@@ -30,36 +30,37 @@ export type Mutation = {
 
 
 export type MutationCreateProjectArgs = {
-  input?: InputMaybe<CreateProjectInput>;
+  input: CreateProjectInput;
 };
 
 
 export type MutationCreateUserArgs = {
-  id?: InputMaybe<Scalars['Int']>;
+  id: Scalars['Int'];
   input: UserInput;
 };
 
 
 export type MutationDeleteProjectArgs = {
-  id?: InputMaybe<Scalars['Int']>;
+  id: Scalars['Int'];
 };
 
 
 export type MutationUpdateProjectArgs = {
-  id?: InputMaybe<Scalars['Int']>;
-  input?: InputMaybe<UpdateProjectInput>;
+  id: Scalars['Int'];
+  input: UpdateProjectInput;
 };
 
 
 export type MutationUpdateUserArgs = {
-  id?: InputMaybe<Scalars['Int']>;
-  input?: InputMaybe<UserInput>;
+  id: Scalars['Int'];
+  input: UserInput;
 };
 
 export type Project = {
   __typename?: 'Project';
-  id?: Maybe<Scalars['Int']>;
-  title?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  status: ProjectStatus;
+  title: Scalars['String'];
 };
 
 export type ProjectStatus =
@@ -80,8 +81,8 @@ export type QueryGetProjectByIdArgs = {
 };
 
 export type UpdateProjectInput = {
-  status?: InputMaybe<ProjectStatus>;
-  title?: InputMaybe<Scalars['String']>;
+  status: ProjectStatus;
+  title: Scalars['String'];
 };
 
 export type User = {
@@ -193,16 +194,17 @@ export type ResolversParentTypes = ResolversObject<{
 }>;
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  createProject?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<MutationCreateProjectArgs, never>>;
-  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
-  deleteProject?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<MutationDeleteProjectArgs, never>>;
-  updateProject?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, never>>;
-  updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, never>>;
+  createProject?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'input'>>;
+  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'id' | 'input'>>;
+  deleteProject?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<MutationDeleteProjectArgs, 'id'>>;
+  updateProject?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'id' | 'input'>>;
+  updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id' | 'input'>>;
 }>;
 
 export type ProjectResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Project'] = ResolversParentTypes['Project']> = ResolversObject<{
-  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  status?: Resolver<ResolversTypes['ProjectStatus'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

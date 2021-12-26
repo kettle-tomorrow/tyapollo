@@ -5,11 +5,11 @@ type Query {
 }
 
 type Mutation {
-  createProject(input: CreateProjectInput): Project
-  updateProject(id: Int, input: UpdateProjectInput): Project
-  deleteProject(id: Int): Project
-  createUser(id: Int, input: UserInput!): User
-  updateUser(id: Int, input: UserInput): User
+  createProject(input: CreateProjectInput!): Project
+  updateProject(id: Int!, input: UpdateProjectInput!): Project
+  deleteProject(id: Int!): Project
+  createUser(id: Int!, input: UserInput!): User
+  updateUser(id: Int!, input: UserInput!): User
 }
 
 input CreateProjectInput {
@@ -17,8 +17,8 @@ input CreateProjectInput {
 }
 
 input UpdateProjectInput {
- title: String
- status: ProjectStatus
+ title: String!
+ status: ProjectStatus!
 }
 
 input UserInput {
@@ -32,8 +32,9 @@ enum ProjectStatus {
 }
 
 type Project {
-  id: Int
-  title: String
+  id: Int!
+  title: String!
+  status: ProjectStatus!
 }
 
 type User {

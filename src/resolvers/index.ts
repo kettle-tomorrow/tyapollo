@@ -1,5 +1,5 @@
 import { Resolvers } from "../types/generated/graphql";
-import { createUser } from "./createUser";
+import * as mutation from "./mutation/"
 
 const resolvers: Resolvers = {
   Query: {
@@ -7,13 +7,7 @@ const resolvers: Resolvers = {
     getProjects: () => [],
     getProjectByID: () => null
   },
-  Mutation: {
-    createProject: () => null,
-    updateProject: () => null,
-    deleteProject: () => null,
-    createUser: createUser,
-    updateUser: () => null
-  }
+  Mutation: mutation
 }
 
 export default resolvers;

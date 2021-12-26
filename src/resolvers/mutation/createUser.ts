@@ -1,5 +1,5 @@
-import { prisma } from "../lib/prisma";
-import { MutationResolvers } from "../types/generated/graphql";
+import { prisma } from "../../lib/prisma";
+import { MutationResolvers } from "../../types/generated/graphql";
 
 export const createUser: MutationResolvers['createUser'] = async(
   parent,
